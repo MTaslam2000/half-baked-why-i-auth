@@ -15,11 +15,11 @@ export async function signUpUser(email, password) {
         password: password,
     });
 
-    return response;
+    return response.user;
 }
 
 export async function signInUser(email, password) {
-    const response = await client.auth.signUp({ email, password });
+    const response = await client.auth.signIn({ email, password });
 
     return response.user;
 }
@@ -32,7 +32,7 @@ export async function checkAuth() {
 
 export async function redirectIfLoggedIn() {
     if (await getUser()) {
-        window.location.replace('./other-page');
+        location.replace('./other-page');
     }
 }
 

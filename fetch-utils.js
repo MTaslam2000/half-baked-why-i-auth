@@ -14,12 +14,30 @@ export async function signUpUser(email, password) {
         email: email,
         password: password,
     });
+
+    return response;
 }
 
-export async function signInUser(email, password) {}
+export async function signInUser(email, password) {
+    const response = await client.auth.signUp({ email, password });
 
-export async function checkAuth() {}
+    return response.user;
+}
 
-export async function redirectIfLoggedIn() {}
+export async function checkAuth() {
+    const user = await getUser();
 
-export async function logout() {}
+    if (!user) location.replace('../');
+}
+
+export async function redirectIfLoggedIn() {
+    if (await getUser()) {
+        window.location.replace('./other-page');
+    }
+}
+
+export async function logout() {
+    await client.auth.signOut();
+
+    return (window.location.href = '../');
+}
